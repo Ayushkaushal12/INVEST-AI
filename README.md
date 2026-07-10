@@ -1,281 +1,441 @@
-<div align="center">
-  
 # 📈 AI Investment Research Agent
-**A next-generation financial intelligence platform powered by GenAI, LangChain, and LangGraph.**
+
+> **A next-generation financial intelligence platform powered by GenAI, LangChain, and LangGraph.**
+
+<p align="center">
 
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
-[![Gemini API](https://img.shields.io/badge/Gemini_AI-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://deepmind.google/technologies/gemini/)
-[![LangChain](https://img.shields.io/badge/LangChain-FFFFFF?style=for-the-badge&logo=langchain&logoColor=black)](https://langchain.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Gemini AI](https://img.shields.io/badge/Gemini_AI-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://deepmind.google/technologies/gemini/)
+[![LangChain](https://img.shields.io/badge/LangChain-FFFFFF?style=for-the-badge&logoColor=black)](https://langchain.com/)
+[![MIT License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-*Institutional-grade equity research at the speed of thought.*
+</p>
 
-[View Demo](#demo-placeholder) · [Report Bug](#) · [Request Feature](#)
-</div>
+<p align="center">
+<b>Institutional-grade equity research at the speed of thought.</b>
+</p>
 
-<br />
-
----
-
-## 📖 Project Description
-
-The **AI Investment Research Agent** is a full-stack, AI-driven financial analytics dashboard that completely automates the equity research pipeline. By seamlessly orchestrating real-time market data APIs with advanced Large Language Models via LangChain and LangGraph, the agent generates institutional-grade investment memorandums in seconds.
-
-It dynamically evaluates real-time stock pricing, distills unstructured financial news, maps out complex business models, measures qualitative economic moats, and issues a final, mathematically-backed **Investment Score** and **Recommendation (Strong Invest, Invest, Watchlist, Hold, Pass)**.
-
-<br />
+<p align="center">
+<a href="#demo">🚀 Demo</a> •
+<a href="#features">✨ Features</a> •
+<a href="#installation">⚙️ Installation</a> •
+<a href="#architecture">🏗️ Architecture</a> •
+<a href="#future-improvements">🚀 Future Improvements</a>
+</p>
 
 ---
 
-## 📸 Screenshots
-*(Placeholder for Screenshots)*
-`[Insert Home Page Screenshot here]`  
-`[Insert Dashboard Layout Screenshot here]`  
-`[Insert Financial Health Card Screenshot here]`  
+# 📖 Project Description
 
-<br />
+The **AI Investment Research Agent** is a full-stack AI-powered financial research platform that automates the complete equity research workflow.
 
----
+Instead of manually analyzing financial statements, business models, market sentiment, and industry risks, users simply enter a company name and receive a comprehensive AI-generated investment report in seconds.
 
-## 🎯 Problem Statement
+The platform combines:
 
-Traditional investment research is slow, manual, and prone to human bias. Retail investors and independent analysts spend hours digging through SEC filings, tracking Yahoo Finance data, mapping economic moats, and analyzing sentiment from the latest news just to form a baseline thesis on a single equity. 
+- 🧠 Google Gemini AI
+- 🔗 LangChain
+- ⚡ LangGraph
+- 📈 Live Financial APIs
+- 📰 Real-Time News Analysis
 
-## 💡 Solution
-
-This platform acts as an autonomous co-pilot. By entering a single company ticker or name, the LangGraph-orchestrated AI workflow instantly collects quantitative financial health metrics, evaluates real-time news sentiment, and uses LangChain to perform deep qualitative reasoning. The result is a beautifully designed, instantly actionable dashboard that saves hours of manual due diligence.
-
-<br />
+to generate institutional-quality investment research.
 
 ---
 
-## 🚀 Project Highlights
+# 📸 Screenshots
+
+> *(Add screenshots after deployment.)*
+
+| Home Page | Dashboard |
+|-----------|-----------|
+| ![Home](assets/home.png) | ![Dashboard](assets/dashboard.png) |
+
+| Financial Health | Investment Report |
+|-----------------|-------------------|
+| ![Financial](assets/financial.png) | ![Report](assets/report.png) |
+
+---
+
+# 🎯 Problem Statement
+
+Traditional investment research is:
+
+- Time consuming
+- Manual
+- Difficult for beginners
+- Requires reading multiple sources
+- Prone to human bias
+
+Retail investors spend hours researching:
+
+- SEC filings
+- Financial ratios
+- Business models
+- Industry news
+- Company risks
+
+before making a single investment decision.
+
+---
+
+# 💡 Solution
+
+The AI Investment Research Agent automates the complete research process.
+
+Simply enter a company name and the AI will:
+
+- Fetch real-time financial information
+- Analyze the company's business model
+- Read the latest news
+- Identify business risks
+- Evaluate competitive advantages
+- Generate an investment score
+- Provide an AI-powered investment recommendation
+
+---
+
+# ✨ Features
 
 | Feature | Description |
-|---------|-------------|
-| **🧠 Deep AI Reasoning** | Leverages Gemini and LangChain to unpack complex business models and competitive moats. |
-| **⚡ Real-time Data** | Fetches live market caps, EPS, Margins, and FCF via live financial APIs. |
-| **🛡️ Risk Mapping** | Autonomously detects specific, non-generic business risks and ranks their severity. |
-| **📰 News Pulse** | Analyzes live headlines to gauge immediate market sentiment and catalysts. |
-| **🎨 Premium UI** | Framer Motion animations, glassmorphism, and a deeply optimized React layout. |
-
-<br />
+|----------|-------------|
+| 🧠 AI Business Analysis | Understands company business models using Gemini + LangChain |
+| 📊 Financial Health | Retrieves live financial metrics |
+| 📰 News Pulse | Summarizes recent news with sentiment analysis |
+| ⚠️ Risk Map | Detects company-specific investment risks |
+| ⭐ Investment Score | Generates a score out of 100 |
+| 💰 Final Recommendation | Strong Invest / Invest / Watchlist / Hold / Pass |
+| 🎨 Modern UI | Responsive React dashboard with Framer Motion |
 
 ---
 
-## ⚙️ Technology Stack
+# ⚙️ Technology Stack
 
 | Category | Technology |
-|----------|------------|
-| **Frontend** | React, JavaScript, Vite, CSS (Glassmorphism) |
-| **Backend** | Node.js, Express.js |
-| **AI / LLMs** | Google Gemini 1.5 Pro/Flash |
-| **AI Orchestration** | LangChain, LangGraph |
-| **Financial APIs** | Yahoo Finance (Custom Integrations) |
-| **Animations** | Framer Motion |
-| **Icons** | Lucide React |
-
-<br />
+|-----------|------------|
+| Frontend | React.js, Vite, JavaScript |
+| Styling | CSS3, Glassmorphism, Framer Motion |
+| Backend | Node.js, Express.js |
+| AI | Google Gemini |
+| AI Framework | LangChain |
+| Workflow | LangGraph |
+| Financial Data | Yahoo Finance API |
+| Icons | Lucide React |
 
 ---
 
-## 🏗️ Architecture Overview
+# 🏗️ Architecture
 
-### Complete Folder Structure
+## Folder Structure
+
 ```text
 investment-research-agent/
-├── client/                     # React Frontend
+│
+├── client/
 │   ├── src/
-│   │   ├── assets/             # Images and static files
-│   │   ├── components/         # Reusable React components
-│   │   │   └── dashboard/      # Cards: Business, Financial, News, Risk
-│   │   ├── hooks/              # Custom React hooks (useResearch)
-│   │   ├── pages/              # Main Route Views (Dashboard.jsx)
-│   │   ├── services/           # Axios API calls to Express backend
-│   │   ├── styles/             # Modular CSS
-│   │   ├── App.jsx             # Root React component
-│   │   ├── index.css           # Global tokens & animations
-│   │   └── main.jsx            # Vite entry point
+│   │
+│   ├── assets/
+│   ├── components/
+│   ├── hooks/
+│   ├── pages/
+│   ├── services/
+│   ├── styles/
+│   │
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
+│
+├── server/
+│   ├── config/
+│   ├── controllers/
+│   ├── routes/
+│   ├── services/
+│   ├── langgraph/
+│   ├── prompts/
+│   ├── middleware/
+│   ├── server.js
 │   └── package.json
-└── server/                     # Express Backend
-    ├── config/                 # Environment & LLM setup (gemini.js)
-    ├── controllers/            # Route controllers (researchController.js)
-    ├── langgraph/              # Complex workflow definitions
-    ├── middleware/             # Error handlers & rate limits
-    ├── prompts/                # LangChain System Prompts
-    ├── routes/                 # Express Routers
-    ├── services/               # Core business logic (researchService.js)
-    ├── server.js               # Node.js entry point
-    └── package.json
+│
+└── README.md
 ```
-
-<br />
 
 ---
 
-## 🔄 How It Works
-
-### Architecture Diagram
+# 🔄 System Architecture
 
 ```text
-    [ User ]
-       │
-       ▼
-[ Landing Page ]
-       │
-       ▼
- [ Dashboard ] ─────▶ [ Express API ]
-                            │
-                            ▼
-                     [ LangGraph ]
-                            │
-                      [ LangChain ]
-                       /         \
-                      /           \
-                     ▼             ▼
-          [ Financial APIs ]   [ News APIs ]
-                     \             /
-                      \           /
-                       ▼         ▼
-                    [ Gemini AI Model ]
-                            │
-                            ▼
-                   [ Research Engine ]
-                            │
-                            ▼
-                    [ JSON Response ]
-                            │
-                            ▼
-                  [ Dashboard Cards ]
+                User
+                  │
+                  ▼
+          Landing Page
+                  │
+                  ▼
+         Company Search
+                  │
+                  ▼
+         React Dashboard
+                  │
+                  ▼
+          Express Backend
+                  │
+      ┌───────────┴───────────┐
+      │                       │
+      ▼                       ▼
+Financial APIs          News APIs
+      │                       │
+      └───────────┬───────────┘
+                  ▼
+            LangGraph Engine
+                  │
+                  ▼
+             LangChain
+                  │
+                  ▼
+             Gemini AI
+                  │
+                  ▼
+       Investment Research
+                  │
+                  ▼
+          Dashboard Results
 ```
 
-### Flow Diagram
+---
+
+# 🔄 Research Workflow
 
 ```text
-Company Search
-       ↓
+User searches Company
+          │
+          ▼
 Validate Company
-       ↓
+          │
+          ▼
 Fetch Financial Data
-       ↓
-Fetch News
-       ↓
-Generate Business Model
-       ↓
-Generate Financial Health
-       ↓
+          │
+          ▼
+Fetch Latest News
+          │
+          ▼
+Analyze Business Model
+          │
+          ▼
+Analyze Financial Health
+          │
+          ▼
 Generate Risk Analysis
-       ↓
-Generate Investment Score
-       ↓
+          │
+          ▼
+Calculate Investment Score
+          │
+          ▼
 Generate Final Recommendation
-       ↓
-Display Dashboard
+          │
+          ▼
+Display Interactive Dashboard
 ```
-
-<br />
 
 ---
 
-## 🛠️ Installation Guide
+# 🚀 Installation
 
-### Prerequisites
-- Node.js (v18+)
-- npm or yarn
-- Google Gemini API Key
+## Clone Repository
 
-### 1. Clone Repository
 ```bash
 git clone https://github.com/yourusername/investment-research-agent.git
 cd investment-research-agent
 ```
 
-### 2. Environment Variables
-Create a `.env` file in the `server` directory:
-```env
-PORT=5000
-GEMINI_API_KEY=your_google_gemini_api_key_here
-```
+---
 
-### 3. Install & Run Backend
+## Install Backend
+
 ```bash
 cd server
 npm install
 npm run dev
 ```
 
-### 4. Install & Run Frontend
+---
+
+## Install Frontend
+
 ```bash
-cd ../client
+cd client
 npm install
 npm run dev
 ```
 
-The application will be available at `http://localhost:5173`.
+---
 
-<br />
+## Environment Variables
+
+Create a `.env` file inside the `server` folder.
+
+```env
+PORT=5000
+
+GEMINI_API_KEY=YOUR_API_KEY
+
+TAVILY_API_KEY=YOUR_API_KEY
+```
 
 ---
 
-## 🧠 Research Engine
+# 🧠 Research Engine
 
-### Investment Analysis Flow
-The backend uses **LangChain** to orchestrate prompts and format API outputs into strict JSON structures that the frontend easily consumes. **LangGraph** manages the stateful transitions between data fetching, fallback logic, and AI synthesis.
+## Business Model
 
-### Business Model Generation
-The AI generates a 300-400 word unique report explaining core products, revenue models, expansion strategies, and economic moats. The frontend parser renders this dynamically with bullet points, keyword highlights, and a staggered typing animation.
+AI generates a detailed explanation including:
 
-### Financial Health Generation
-The system strips out noise and maps exactly 10 crucial metrics (Current Price, Market Cap, Revenue, Net Income, EPS, ROE, Gross Margin, Operating Margin, Profit Margin, FCF). It automatically handles API outages by gracefully falling back to "Not Available" per metric.
-
-### News Pulse
-Live headlines are passed through the LLM to gauge sentiment (Positive, Neutral, Negative) and generate a 1-2 sentence investor takeaway.
-
-### Risk Map & Investment Score
-The system algorithmically calculates a score out of 100 based on P/E ratios, momentum, and volume. The AI cross-references this to issue 8-10 highly specific company risks and ultimately maps the score to one of 5 verdicts: `STRONG INVEST`, `INVEST`, `WATCHLIST`, `HOLD`, `PASS`.
-
-<br />
+- Products
+- Services
+- Revenue Streams
+- Competitive Advantage
+- Expansion Strategy
+- Future Outlook
 
 ---
 
-## 🛡️ Security Considerations
-- **Backend Secrets**: API keys are securely managed via `.env` in the Node environment and never exposed to the client.
-- **Input Sanitization**: Express routes validate and trim all company ticker requests before querying upstream financial APIs.
-- **Rate Limiting**: Yahoo Finance endpoints are cached where appropriate to prevent IP bans.
+## Financial Health
 
-<br />
+Displays important financial metrics including:
 
----
-
-## 🚀 Future Improvements
-- [ ] Add User Authentication to save previous research.
-- [ ] Incorporate SEC EDGAR database for 10-K scraping.
-- [ ] Add WebSocket integration for real-time stock ticker updates.
-- [ ] Introduce a portfolio backtesting engine based on AI recommendations.
-
-<br />
+- Current Price
+- Market Cap
+- Revenue
+- Net Income
+- EPS
+- ROE
+- Gross Margin
+- Operating Margin
+- Profit Margin
+- Free Cash Flow
 
 ---
 
-## 🤝 Contribution Guide
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+## News Pulse
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+Analyzes live company news.
 
-## 📄 License
-Distributed under the MIT License. See `LICENSE` for more information.
+- Latest Headlines
+- AI Summary
+- Market Sentiment
+- Positive / Neutral / Negative
 
-<br />
+---
 
-<div align="center">
-  <b>Built with ❤️ for the future of decentralized finance.</b>
-</div>
-#   I N V E S T - A I  
- #   I N V E S T - A I  
- 
+## Risk Map
+
+Generates company-specific risks such as:
+
+- Business Risks
+- Financial Risks
+- Regulatory Risks
+- Technology Risks
+- Competition Risks
+- Valuation Risks
+
+---
+
+## Final Recommendation
+
+The AI produces one of:
+
+- 🟢 Strong Invest
+- 🟢 Invest
+- 🟡 Watchlist
+- 🟠 Hold
+- 🔴 Pass
+
+along with a detailed justification.
+
+---
+
+# 🔒 Security
+
+- API Keys stored in `.env`
+- Backend-only API access
+- Input validation
+- Error handling
+- Rate limiting
+- Secure API communication
+
+---
+
+# 🚀 Future Improvements
+
+- [ ] User Authentication
+- [ ] Portfolio Tracker
+- [ ] SEC Filing Analysis
+- [ ] Real-Time Stock Charts
+- [ ] AI Portfolio Optimization
+- [ ] Historical Backtesting
+- [ ] Multi-Agent Investment Debate
+- [ ] Cloud Deployment
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork this repository
+
+2. Create a new branch
+
+```bash
+git checkout -b feature/new-feature
+```
+
+3. Commit changes
+
+```bash
+git commit -m "Added new feature"
+```
+
+4. Push
+
+```bash
+git push origin feature/new-feature
+```
+
+5. Create a Pull Request
+
+---
+
+# 📄 License
+
+Distributed under the **MIT License**.
+
+See `LICENSE` for more information.
+
+---
+
+# 👨‍💻 Developer
+
+**Ayush Kaushal**
+
+🎓 B.Tech Computer Science & Engineering
+
+💻 Full Stack Developer | AI Enthusiast
+
+🤖 LangChain • LangGraph • React • Node.js • Express • C++ • Data Structures & Algorithms
+
+📧 Email: your-email@example.com
+
+🔗 LinkedIn: https://linkedin.com/in/your-profile
+
+💻 GitHub: https://github.com/yourusername
+
+---
+
+<p align="center">
+
+⭐ If you found this project useful, consider giving it a star!
+
+Made with ❤️ using React, Node.js, LangChain, LangGraph & Gemini AI.
+
+</p>
