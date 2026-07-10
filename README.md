@@ -277,4 +277,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
   <b>Built with ❤️ for the future of decentralized finance.</b>
 </div>
 #   I N V E S T - A I  
+ #   I N V E S T - A I  
  
