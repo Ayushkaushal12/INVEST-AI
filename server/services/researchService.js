@@ -6,7 +6,8 @@ const yahoo = axios.create({
   baseURL: "https://query1.finance.yahoo.com",
   timeout: 8000,
   headers: {
-    "User-Agent": "investment-research-agent/1.0",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept": "application/json",
   },
 });
 
@@ -16,11 +17,11 @@ let cachedCookie = null;
 async function getYahooAuth() {
   if (cachedCrumb && cachedCookie) return { cookie: cachedCookie, crumb: cachedCrumb };
   try {
-    const cookieRes = await axios.get('https://fc.yahoo.com', { validateStatus: () => true, headers: {'User-Agent': 'Mozilla/5.0'} });
+    const cookieRes = await axios.get('https://fc.yahoo.com', { validateStatus: () => true, headers: {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'} });
     const setCookie = cookieRes.headers['set-cookie'];
     const cookie = setCookie ? setCookie[0].split(';')[0] : '';
     const crumbRes = await axios.get('https://query1.finance.yahoo.com/v1/test/getcrumb', {
-      headers: { cookie, 'User-Agent': 'Mozilla/5.0' },
+      headers: { cookie, 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' },
       timeout: 5000
     });
     cachedCookie = cookie;
@@ -49,7 +50,7 @@ async function resolveCompany(query) {
     try {
       const auth = await getYahooAuth();
       const summaryRes = await axios.get(`https://query2.finance.yahoo.com/v10/finance/quoteSummary/${ticker}?modules=assetProfile,price&crumb=${auth.crumb}`, {
-        headers: { cookie: auth.cookie, 'User-Agent': 'Mozilla/5.0' },
+        headers: { cookie: auth.cookie, 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' },
         timeout: 5000
       });
       const res = summaryRes.data?.quoteSummary?.result?.[0];
@@ -147,7 +148,7 @@ async function collectMarketResearch(company) {
     try {
       const auth = await getYahooAuth();
       const quoteSummaryRes = await axios.get(`https://query2.finance.yahoo.com/v10/finance/quoteSummary/${ticker}?modules=financialData,defaultKeyStatistics,summaryDetail,price&crumb=${auth.crumb}`, {
-        headers: { cookie: auth.cookie, 'User-Agent': 'Mozilla/5.0' },
+        headers: { cookie: auth.cookie, 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' },
         timeout: 5000
       });
       const res = quoteSummaryRes.data?.quoteSummary?.result?.[0];
@@ -192,7 +193,7 @@ async function collectMarketResearch(company) {
       // Fallback strategy: Try older v7 endpoint if quoteSummary fails
       try {
         const fallbackRes = await axios.get(`https://query2.finance.yahoo.com/v7/finance/quote?symbols=${ticker}`, {
-          headers: { 'User-Agent': 'Mozilla/5.0' }
+          headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' }
         });
         const fbQuote = fallbackRes.data?.quoteResponse?.result?.[0];
         if (fbQuote) quote = fbQuote;
