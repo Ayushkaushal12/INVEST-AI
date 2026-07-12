@@ -138,7 +138,7 @@ function FinancialCard({ research, loading }) {
                       <span style={{ color: 'var(--muted)', display: 'flex' }}>{MetricIcon}</span>
                       {item.label}
                     </span>
-                    <strong style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1.05rem', color: 'var(--text-color, #0f172a)' }}>
+                    <strong style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1.05rem', color: '#FFFFFF' }}>
                       <AnimatedValue raw={item.raw} formatted={item.value} type={item.type} />
                       {item.signal === "negative" ? (
                         <TrendingDown size={14} style={{ color: '#ef4444' }} />
