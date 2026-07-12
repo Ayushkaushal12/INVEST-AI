@@ -424,18 +424,14 @@ See `LICENSE` for more information.
 
 🤖 LangChain • LangGraph • React • Node.js • Express • C++ • Data Structures & Algorithms
 
-📧 Email: your-email@example.com
+📧 Email: ayushkaushal7792@gmail.com
 
-🔗 LinkedIn: https://linkedin.com/in/your-profile
+🔗 LinkedIn: https://www.linkedin.com/in/akaushal7792a
 
-💻 GitHub: https://github.com/yourusername
+💻 GitHub: https://github.com/Ayushkaushal12
 
 ---
-
-<p align="center">
 
 ⭐ If you found this project useful, consider giving it a star!
 
 Made with ❤️ using React, Node.js, LangChain, LangGraph & Gemini AI.
-
-</p>
