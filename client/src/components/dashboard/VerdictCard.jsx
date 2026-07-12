@@ -96,11 +96,26 @@ function VerdictCard({ research, loading }) {
             style={research ? {
               background: `linear-gradient(135deg, ${dynamicVerdict.color}20, transparent)`,
               border: `1px solid ${dynamicVerdict.color}40`,
-              boxShadow: `0 0 20px ${dynamicVerdict.color}20`
+              boxShadow: `0 0 20px ${dynamicVerdict.color}20`,
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "8px",
+              padding: "16px 18px"
             } : {}}
           >
-            <span style={research ? { color: dynamicVerdict.color, textShadow: `0 0 10px ${dynamicVerdict.color}50` } : {}}>{dynamicVerdict.label}</span>
-            <small>{research?.confidence || "Confidence pending"}</small>
+            <div style={{ display: "flex", justifyContent: "space-between", width: "100%", alignItems: "center" }}>
+               <span style={research ? { color: dynamicVerdict.color, textShadow: `0 0 10px ${dynamicVerdict.color}50` } : {}}>{dynamicVerdict.label}</span>
+               <small style={{ fontWeight: "bold", opacity: 0.9 }}>AI Confidence: {research?.confidencePercent || 0}%</small>
+            </div>
+            {/* Smooth Confidence Bar */}
+            <div style={{ width: "100%", height: "6px", background: "rgba(255,255,255,0.1)", borderRadius: "3px", overflow: "hidden" }}>
+               <motion.div
+                 initial={{ width: "0%" }}
+                 animate={{ width: `${research?.confidencePercent || 0}%` }}
+                 transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
+                 style={{ height: "100%", background: dynamicVerdict.color }}
+               />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

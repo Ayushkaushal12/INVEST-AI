@@ -31,11 +31,55 @@ async function getYahooAuth() {
   }
 }
 
+async function resolveCompany(query) {
+  try {
+    const searchResponse = await yahoo.get("/v1/finance/search", {
+      params: { q: query, quotesCount: 1, newsCount: 1 },
+    });
+    const searchQuote = searchResponse.data?.quotes?.find((item) => item.symbol);
+    if (!searchQuote) return null;
+
+    const ticker = searchQuote.symbol;
+    let country = "Unknown";
+    let sector = searchQuote.sector || "Unknown";
+    let industry = searchQuote.industry || "Unknown";
+    let exchange = searchQuote.exchDisp || searchQuote.exchange || "Unknown";
+    let name = searchQuote.shortname || searchQuote.longname || query;
+
+    try {
+      const auth = await getYahooAuth();
+      const summaryRes = await axios.get(`https://query2.finance.yahoo.com/v10/finance/quoteSummary/${ticker}?modules=assetProfile,price&crumb=${auth.crumb}`, {
+        headers: { cookie: auth.cookie, 'User-Agent': 'Mozilla/5.0' },
+        timeout: 5000
+      });
+      const res = summaryRes.data?.quoteSummary?.result?.[0];
+      if (res) {
+        country = res.assetProfile?.country || country;
+        sector = res.assetProfile?.sector || sector;
+        industry = res.assetProfile?.industry || industry;
+        exchange = res.price?.exchangeName || exchange;
+        name = res.price?.shortName || res.price?.longName || name;
+      }
+    } catch (e) {
+      // Ignore fallback
+    }
+
+    return { name, ticker, exchange, industry, sector, country };
+  } catch (error) {
+    return null;
+  }
+}
+
 async function runInvestmentResearch(company) {
-  const { ticker, quote, news } = await collectMarketResearch(company);
-  const score = scoreCompany(quote, news, company);
-  const aiNote = await createAiResearchNote({ company, marketData: quote, news });
-  const fallback = buildFallbackNote(company, quote, news, score);
+  const resolved = await resolveCompany(company);
+  if (!resolved) {
+    throw new Error("Company not found");
+  }
+
+  const { ticker, quote, news } = await collectMarketResearch(resolved.ticker);
+  const score = scoreCompany(quote, news, resolved.name);
+  const aiNote = await createAiResearchNote({ company: resolved.name, marketData: quote, news });
+  const fallback = buildFallbackNote(resolved.name, quote, news, score);
   const note = mergeResearchNotes(aiNote, fallback);
   let verdict = "PASS";
   if (score >= 85) verdict = "STRONG INVEST";
@@ -44,8 +88,8 @@ async function runInvestmentResearch(company) {
   else if (score >= 35) verdict = "HOLD";
 
   return {
-    company: quote?.shortName || quote?.longName || company,
-    ticker: ticker || quote?.symbol || null,
+    company: resolved.name,
+    ticker: resolved.ticker,
     generatedAt: new Date().toISOString(),
     score,
     verdict,
@@ -54,7 +98,7 @@ async function runInvestmentResearch(company) {
     summary: note.summary,
     thesis: note.thesis,
     business: note.business,
-    financials: normalizeFinancials(quote),
+    financials: normalizeFinancials(quote, resolved),
     news: normalizeNews(news, note.newsAnalysis),
     risks: note.risks,
     catalysts: note.catalysts,
@@ -78,7 +122,7 @@ async function collectMarketResearch(company) {
     });
 
     const firstQuote = searchResponse.data?.quotes?.find((item) => item.symbol);
-    const ticker = firstQuote?.symbol;
+    const ticker = firstQuote?.symbol || company;
     const news = (searchResponse.data?.news || []).slice(0, 5).map((item) => ({
       title: item.title,
       source: item.publisher,
@@ -306,7 +350,7 @@ function buildMetric(label, rawValue, type, positiveCondition = null, negativeCo
   }
 
   let formatted = "Not Available";
-  if (rawValue !== undefined && rawValue !== null && !isNaN(rawValue)) {
+  if (rawValue !== undefined && rawValue !== null && (type === "string" || !isNaN(rawValue))) {
     if (type === "percent") {
       formatted = `${(rawValue * 100).toFixed(2)}%`;
       rawValue = rawValue * 100;
@@ -335,21 +379,25 @@ function buildMetric(label, rawValue, type, positiveCondition = null, negativeCo
   };
 }
 
-function normalizeFinancials(quote) {
+function normalizeFinancials(quote, resolved) {
   if (!quote) return [];
 
-  const metrics = [
+  const metrics = [];
+  
+  if (resolved) {
+    metrics.push(
+      buildMetric("Country", resolved.country, "string", null, null),
+      buildMetric("Sector", resolved.sector, "string", null, null)
+    );
+  }
+
+  metrics.push(
     buildMetric("Current Stock Price", quote.regularMarketPrice, "currency", null, null),
     buildMetric("Market Capitalization", quote.marketCap, "currency", v => v > 10_000_000_000, null),
     buildMetric("Revenue (TTM)", quote.totalRevenue, "currency", null, null),
     buildMetric("Net Income", quote.netIncome, "currency", v => v > 0, v => v < 0),
-    buildMetric("Earnings Per Share (EPS)", quote.trailingEps, "currency", v => v > 0, v => v < 0),
-    buildMetric("Return on Equity (ROE)", quote.returnOnEquity, "percent", v => v > 0.15, v => v < 0),
-    buildMetric("Gross Margin", quote.grossMargins, "percent", v => v > 0.4, v => v < 0.1),
-    buildMetric("Operating Margin", quote.operatingMargins, "percent", v => v > 0.15, v => v < 0),
-    buildMetric("Profit Margin", quote.profitMargins, "percent", v => v > 0.1, v => v < 0),
-    buildMetric("Free Cash Flow", quote.freeCashflow, "currency", v => v > 0, v => v < 0)
-  ];
+    buildMetric("Return on Equity (ROE)", quote.returnOnEquity, "percent", v => v > 0.15, v => v < 0)
+  );
 
   return metrics;
 }
@@ -388,15 +436,8 @@ function stableHash(input) {
 }
 
 async function validateCompanyExistence(company) {
-  try {
-    const searchResponse = await yahoo.get("/v1/finance/search", {
-      params: { q: company, quotesCount: 1, newsCount: 1 },
-    });
-    const firstQuote = searchResponse.data?.quotes?.find((item) => item.symbol);
-    return !!firstQuote?.symbol;
-  } catch (error) {
-    return false;
-  }
+  const resolved = await resolveCompany(company);
+  return !!resolved;
 }
 
 module.exports = { runInvestmentResearch, validateCompanyExistence };

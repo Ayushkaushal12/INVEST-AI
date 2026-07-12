@@ -1,11 +1,22 @@
-import { Banknote, TrendingDown, TrendingUp, Loader2, Info } from "lucide-react";
+import { Banknote, TrendingDown, TrendingUp, Loader2, Info, DollarSign, PieChart, Activity, Building, MapPin, Tag } from "lucide-react";
 import { motion, AnimatePresence, useMotionValue, useTransform, animate } from "framer-motion";
 import { useState, useEffect } from "react";
 
+function getIconForMetric(label) {
+  const L = label.toLowerCase();
+  if (L.includes("price")) return <Tag size={16} />;
+  if (L.includes("cap")) return <PieChart size={16} />;
+  if (L.includes("revenue")) return <DollarSign size={16} />;
+  if (L.includes("income") || L.includes("equity") || L.includes("margin") || L.includes("cash")) return <Activity size={16} />;
+  if (L.includes("sector") || L.includes("industry")) return <Building size={16} />;
+  if (L.includes("country") || L.includes("exchange")) return <MapPin size={16} />;
+  return <Banknote size={16} />;
+}
+
 const loadingSteps = [
-  "Fetching Financial Statements...",
-  "Calculating Financial Ratios...",
-  "Building Financial Summary..."
+  "Fetching Market Data...",
+  "Reading Financial Statements...",
+  "Preparing Financial Snapshot..."
 ];
 
 function AnimatedValue({ raw, formatted, type }) {
@@ -101,32 +112,43 @@ function FinancialCard({ research, loading }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="metric-grid"
-              style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.75rem', marginTop: '1rem' }}
+              className="metric-list"
+              style={{ display: 'flex', flexDirection: 'column', gap: '0', marginTop: '1rem' }}
             >
-              {financials.map((item, idx) => (
-                <motion.div 
-                  className="metric-row" 
-                  key={`${item.label}-${idx}`}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.05 }}
-                  whileHover={{ y: -3, boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
-                  style={{ display: 'flex', flexDirection: 'column', padding: '1rem', background: 'var(--surface-color, #f8fafc)', borderRadius: '8px', border: '1px solid var(--border-color, #e2e8f0)', cursor: 'default' }}
-                >
-                  <span style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '0.4rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    {item.label}
-                    {item.signal === "negative" ? (
-                      <TrendingDown className="metric-icon negative" size={16} style={{ color: '#ef4444' }} />
-                    ) : item.signal === "positive" ? (
-                      <TrendingUp className={`metric-icon positive`} size={16} style={{ color: '#10b981' }} />
-                    ) : null}
-                  </span>
-                  <strong style={{ fontSize: '1.2rem', color: 'var(--text-color, #0f172a)' }}>
-                    <AnimatedValue raw={item.raw} formatted={item.value} type={item.type} />
-                  </strong>
-                </motion.div>
-              ))}
+              {financials.map((item, idx) => {
+                const MetricIcon = getIconForMetric(item.label);
+                return (
+                  <motion.div 
+                    className="metric-row-clean" 
+                    key={`${item.label}-${idx}`}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.1, duration: 0.5, ease: "easeOut" }}
+                    style={{ 
+                      display: 'flex', 
+                      flexDirection: 'row', 
+                      justifyContent: 'space-between',
+                      alignItems: 'center', 
+                      padding: '14px 4px', 
+                      borderBottom: idx === financials.length - 1 ? 'none' : '1px solid var(--line)',
+                      background: 'transparent'
+                    }}
+                  >
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#64748b', fontSize: '0.9rem' }}>
+                      <span style={{ color: 'var(--muted)', display: 'flex' }}>{MetricIcon}</span>
+                      {item.label}
+                    </span>
+                    <strong style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1.05rem', color: 'var(--text-color, #0f172a)' }}>
+                      <AnimatedValue raw={item.raw} formatted={item.value} type={item.type} />
+                      {item.signal === "negative" ? (
+                        <TrendingDown size={14} style={{ color: '#ef4444' }} />
+                      ) : item.signal === "positive" ? (
+                        <TrendingUp size={14} style={{ color: '#10b981' }} />
+                      ) : null}
+                    </strong>
+                  </motion.div>
+                );
+              })}
             </motion.div>
           )}
         </AnimatePresence>

@@ -426,6 +426,10 @@ a {
   grid-column: span 6;
 }
 
+.dashboard-grid > div {
+  height: 100%;
+}
+
 .dashboard-card {
   position: relative;
   min-height: 310px;

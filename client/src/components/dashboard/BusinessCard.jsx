@@ -4,20 +4,22 @@ import { useState, useEffect } from "react";
 
 const loadingSteps = [
   "Analyzing Company...",
-  "Understanding Revenue Model...",
-  "Evaluating Competitive Position...",
-  "Generating AI Business Analysis..."
+  "Understanding Products...",
+  "Evaluating Business Strategy...",
+  "Generating AI Business Summary...",
 ];
 
-// Simple component to highlight keywords (e.g. text wrapped in **bold**)
 function FormattedText({ text }) {
-  // Replace **text** with <strong>text</strong>
   const parts = text.split(/(\*\*.*?\*\*)/g);
   return (
     <>
       {parts.map((part, i) => {
         if (part.startsWith("**") && part.endsWith("**")) {
-          return <strong key={i} style={{ color: "var(--text)" }}>{part.slice(2, -2)}</strong>;
+          return (
+            <strong key={i} style={{ color: "var(--text)" }}>
+              {part.slice(2, -2)}
+            </strong>
+          );
         }
         return <span key={i}>{part}</span>;
       })}
@@ -41,18 +43,29 @@ function BusinessCard({ research, loading }) {
 
   const business = research?.business;
   const modelText = business?.model || "";
-  
+
   // Split the text into paragraphs/bullets
-  const paragraphs = modelText.split('\n').filter(p => p.trim() !== "");
+  const paragraphs = modelText.split("\n").filter((p) => p.trim() !== "");
 
   return (
-    <motion.article className="dashboard-card business-card" layout style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <motion.article
+      className="dashboard-card business-card"
+      layout
+      style={{ display: "flex", flexDirection: "column", height: "100%" }}
+    >
       <div className="card-title-row">
         <Building2 size={20} aria-hidden="true" />
         <h2>Business Model</h2>
       </div>
 
-      <div style={{ flex: 1, position: 'relative', overflowY: 'auto', paddingRight: '4px' }}>
+      <div
+        style={{
+          flex: 1,
+          position: "relative",
+          overflowY: "auto",
+          paddingRight: "4px",
+        }}
+      >
         <AnimatePresence mode="wait">
           {loading ? (
             <motion.div
@@ -61,10 +74,21 @@ function BusinessCard({ research, loading }) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="loading-container"
-              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: '1rem', paddingTop: '2rem' }}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "100%",
+                gap: "1rem",
+                paddingTop: "2rem",
+              }}
             >
-              <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }}>
-                <Loader2 size={32} style={{ color: '#94a3b8' }} />
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+              >
+                <Loader2 size={32} style={{ color: "#94a3b8" }} />
               </motion.div>
               <motion.div
                 key={loadingStepIdx}
@@ -72,7 +96,11 @@ function BusinessCard({ research, loading }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
-                style={{ color: '#94a3b8', fontSize: '0.9rem', textAlign: 'center' }}
+                style={{
+                  color: "#94a3b8",
+                  fontSize: "0.9rem",
+                  textAlign: "center",
+                }}
               >
                 {loadingSteps[loadingStepIdx]}
               </motion.div>
@@ -83,7 +111,17 @@ function BusinessCard({ research, loading }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="empty-state"
-              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: '1rem', paddingTop: '2rem', color: '#94a3b8', textAlign: 'center' }}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "100%",
+                gap: "1rem",
+                paddingTop: "2rem",
+                color: "#94a3b8",
+                textAlign: "center",
+              }}
             >
               <Info size={32} />
               <p>Business model information is currently unavailable.</p>
@@ -94,13 +132,22 @@ function BusinessCard({ research, loading }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+              style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
             >
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.75rem",
+                }}
+              >
                 {paragraphs.map((p, idx) => {
-                  const isBullet = p.trim().startsWith('-') || p.trim().startsWith('•');
-                  const content = isBullet ? p.trim().substring(1).trim() : p.trim();
-                  
+                  const isBullet =
+                    p.trim().startsWith("-") || p.trim().startsWith("•");
+                  const content = isBullet
+                    ? p.trim().substring(1).trim()
+                    : p.trim();
+
                   return (
                     <motion.div
                       key={idx}
@@ -108,11 +155,11 @@ function BusinessCard({ research, loading }) {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: idx * 0.1, duration: 0.5 }}
                       style={{
-                        display: isBullet ? 'list-item' : 'block',
-                        marginLeft: isBullet ? '1.5rem' : '0',
-                        listStyleType: isBullet ? 'disc' : 'none',
-                        color: 'var(--muted)',
-                        lineHeight: '1.65'
+                        display: isBullet ? "list-item" : "block",
+                        marginLeft: isBullet ? "1.5rem" : "0",
+                        listStyleType: isBullet ? "disc" : "none",
+                        color: "var(--muted)",
+                        lineHeight: "1.65",
                       }}
                     >
                       <FormattedText text={content} />
@@ -122,7 +169,7 @@ function BusinessCard({ research, loading }) {
               </div>
 
               {business.moat && (
-                <motion.div 
+                <motion.div
                   className="mini-panel"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -134,7 +181,7 @@ function BusinessCard({ research, loading }) {
               )}
 
               {business.growthDrivers && business.growthDrivers.length > 0 && (
-                <motion.div 
+                <motion.div
                   className="tag-row"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}

@@ -8,7 +8,7 @@ Return only valid JSON with this shape:
 {
   "summary": "2 sentence overview",
   "business": {
-    "model": "A highly detailed 300-400 word report dynamically explaining: what the company does, core products, core services, revenue model, business segments, primary customers, global presence, market position, competitive advantages, economic moat, innovation strategy, expansion strategy, recent developments, future opportunities, and long-term outlook. This must be entirely unique per company and NEVER reuse boilerplate or hardcoded text. Use paragraphs and bullet points for readability where appropriate.",
+    "model": "A 180-250 word report dynamically explaining the business. MUST include these sections: Company Overview, Core Products & Services, Revenue Sources, Primary Customers, Industry Position, Competitive Advantage (Economic Moat), Growth Strategy, and Future Outlook. Highlight important keywords in bold. Use short paragraphs. Improve readability. Do not repeat information. This must be entirely unique per company and NEVER reuse boilerplate or hardcoded text.",
     "moat": "competitive advantage or weakness",
     "growthDrivers": ["driver 1", "driver 2", "driver 3"]
   },
@@ -34,7 +34,7 @@ Return only valid JSON with this shape:
   "concerns": ["Top concern 1", "Top concern 2", "Top concern 3"],
   "justification": "A 250-350 word detailed explanation including: Executive Summary, Business Strength, Financial Strength, Competitive Advantage, Growth Drivers, Industry Position, Valuation Discussion, Potential Risks, Why the recommendation was chosen, and Long-term outlook. MUST BE ENTIRELY UNIQUE per company.",
   "thesis": "one paragraph investment thesis",
-  "confidencePercent": 85
+  "confidencePercent": "Integer between 0 and 100 representing AI certainty dynamically calculated based on: Financial stability, Availability of financial data, Business quality, News sentiment, Market volatility, Risk assessment, and AI certainty."
 }
 
 Market data:
