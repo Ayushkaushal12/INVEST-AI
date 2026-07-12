@@ -77,22 +77,28 @@ async function runInvestmentResearch(company) {
   }
 
   const { ticker, quote, news } = await collectMarketResearch(resolved.ticker);
-  const score = scoreCompany(quote, news, resolved.name);
+  const fallbackScore = scoreCompany(quote, news, resolved.name);
   const aiNote = await createAiResearchNote({ company: resolved.name, marketData: quote, news });
-  const fallback = buildFallbackNote(resolved.name, quote, news, score);
+  const fallback = buildFallbackNote(resolved.name, quote, news, fallbackScore);
   const note = mergeResearchNotes(aiNote, fallback);
-  let verdict = "PASS";
-  if (score >= 85) verdict = "STRONG INVEST";
-  else if (score >= 70) verdict = "INVEST";
-  else if (score >= 50) verdict = "WATCHLIST";
-  else if (score >= 35) verdict = "HOLD";
+
+  let finalScore = (typeof note.score === 'number') ? note.score : fallbackScore;
+  let finalVerdict = typeof note.verdict === 'string' ? note.verdict.toUpperCase() : null;
+
+  if (!finalVerdict) {
+    if (finalScore >= 85) finalVerdict = "STRONG INVEST";
+    else if (finalScore >= 70) finalVerdict = "INVEST";
+    else if (finalScore >= 50) finalVerdict = "WATCHLIST";
+    else if (finalScore >= 35) finalVerdict = "HOLD";
+    else finalVerdict = "PASS";
+  }
 
   return {
     company: resolved.name,
     ticker: resolved.ticker,
     generatedAt: new Date().toISOString(),
-    score,
-    verdict,
+    score: finalScore,
+    verdict: finalVerdict,
     confidence: note.confidence || fallback.confidence,
     confidencePercent: note.confidencePercent || fallback.confidencePercent,
     summary: note.summary,
@@ -314,6 +320,8 @@ function buildFallbackNote(company, quote, news, score) {
       : `${name} earns a pass signal because the evidence is not strong enough to justify committing capital today. A cleaner valuation, stronger fundamentals, or clearer catalysts could change the view.`,
     confidence,
     confidencePercent: hasQuote ? 65 : 30,
+    score: score,
+    verdict: positive ? "INVEST" : "PASS",
   };
 }
 
@@ -324,6 +332,8 @@ function mergeResearchNotes(aiNote, fallback) {
 
   return {
     summary: aiNote.summary || fallback.summary,
+    score: typeof aiNote.score === 'number' ? aiNote.score : fallback.score,
+    verdict: typeof aiNote.verdict === 'string' ? aiNote.verdict : fallback.verdict,
     business: {
       model: aiNote.business?.model || fallback.business.model,
       moat: aiNote.business?.moat || fallback.business.moat,
