@@ -49,7 +49,7 @@ async function resolveCompany(query) {
 
     try {
       const auth = await getYahooAuth();
-      const summaryRes = await axios.get(`https://query2.finance.yahoo.com/v10/finance/quoteSummary/${ticker}?modules=assetProfile,price&crumb=${auth.crumb}`, {
+      const summaryRes = await axios.get(`https://query1.finance.yahoo.com/v10/finance/quoteSummary/${ticker}?modules=assetProfile,price&crumb=${auth.crumb}`, {
         headers: { cookie: auth.cookie, 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' },
         timeout: 5000
       });
@@ -147,7 +147,7 @@ async function collectMarketResearch(company) {
     let quote = null;
     try {
       const auth = await getYahooAuth();
-      const quoteSummaryRes = await axios.get(`https://query2.finance.yahoo.com/v10/finance/quoteSummary/${ticker}?modules=financialData,defaultKeyStatistics,summaryDetail,price&crumb=${auth.crumb}`, {
+      const quoteSummaryRes = await axios.get(`https://query1.finance.yahoo.com/v10/finance/quoteSummary/${ticker}?modules=financialData,defaultKeyStatistics,summaryDetail,price&crumb=${auth.crumb}`, {
         headers: { cookie: auth.cookie, 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' },
         timeout: 5000
       });
@@ -192,8 +192,8 @@ async function collectMarketResearch(company) {
     } catch (e) {
       // Fallback strategy: Try older v7 endpoint if quoteSummary fails
       try {
-        const fallbackRes = await axios.get(`https://query2.finance.yahoo.com/v7/finance/quote?symbols=${ticker}`, {
-          headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' }
+        const fallbackRes = await axios.get(`https://query1.finance.yahoo.com/v7/finance/quote?symbols=${ticker}&crumb=${auth?.crumb || ''}`, {
+          headers: { cookie: auth?.cookie || '', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' }
         });
         const fbQuote = fallbackRes.data?.quoteResponse?.result?.[0];
         if (fbQuote) quote = fbQuote;
